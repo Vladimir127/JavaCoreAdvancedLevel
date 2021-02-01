@@ -3,7 +3,7 @@ package lesson02.online;
 import java.io.*;
 
 public class Bank {
-    private Account[] clients = {new Account(150, 100, "pass", "Maria")};
+    private Account[] clients = {new Account(150, 100, "Maria", "pass")};
 
     public Bank(){
 
@@ -36,10 +36,12 @@ public class Bank {
     }
 
     public Account getAccount(String identifiant, String code){
-        for (Account account: clients){
+        for (Account account : clients){
             if (account.getIdentifiantClient().equals(identifiant)) {
+                return account;
             }
         }
+        return null;
     }
 
     public Account createAccount(){

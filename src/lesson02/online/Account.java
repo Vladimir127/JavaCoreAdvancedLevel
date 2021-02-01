@@ -6,11 +6,19 @@ public class Account {
     private String code;
     private String identifiantClient;
 
-    public Account(double balance, double maxOverdraft, String code, String identifiantClient) {
+    public Account(double balance, double maxOverdraft, String identifiantClient, String code) {
         this.balance = balance;
         this.maxOverdraft = maxOverdraft;
         this.code = code;
         this.identifiantClient = identifiantClient;
+    }
+
+    public String getIdentifiantClient() {
+        return identifiantClient;
+    }
+
+    public String getCode() {
+        return code;
     }
 
     public void debit(double summ) throws NegativeDebitException{
@@ -30,4 +38,6 @@ public class Account {
     public void consulterBalance(){
         System.out.println("Your balance is " + balance + " $");
     }
+
+
 }
