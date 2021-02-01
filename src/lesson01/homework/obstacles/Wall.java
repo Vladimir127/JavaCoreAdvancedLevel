@@ -1,32 +1,27 @@
-package lesson01.homework;
+package lesson01.homework.obstacles;
+
+import lesson01.homework.competitors.Competitor;
 
 /** Стена */
 public class Wall extends Obstacle {
     /** Высота стены */
-    private int height;
-
-    /**,
-     * Инициализирует экземпляр класса
-     */
-    public Wall() {
-    }
+    private final int height;
 
     /**
      * Инициализирует экземпляр класса
-     * @param height
+     * @param height Высота стены
      */
     public Wall(int height) {
         this.height = height;
     }
 
     /**
-     * Имитирует взаимодействие (встречу) прыгающего субъекта с данной стеной.
+     * Имитирует взаимодействие (встречу) спортсмена с данной стеной.
      * При встрече со стеной субъект должен её перепрыгнуть.
-     * @param subject Субъект, реализующий интерфейс Competitor
+     * @param competitor Объект класса, реализующего интерфейс Competitor
      */
-    public boolean interact(Competitor subject){
-        subject.jump(height);
-        return true;
+    public boolean interact(Competitor competitor){
+        return competitor.jump(height);
     }
 
     @Override

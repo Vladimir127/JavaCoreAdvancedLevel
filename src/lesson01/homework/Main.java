@@ -1,6 +1,12 @@
 package lesson01.homework;
 
-import java.util.ArrayList;
+import lesson01.homework.competitors.Cat;
+import lesson01.homework.competitors.Competitor;
+import lesson01.homework.competitors.Human;
+import lesson01.homework.competitors.Robot;
+import lesson01.homework.obstacles.Obstacle;
+import lesson01.homework.obstacles.RunningTrack;
+import lesson01.homework.obstacles.Wall;
 
 public class Main {
     public static void main(String[] args) {
@@ -37,11 +43,21 @@ public class Main {
 
         System.out.println("\nНа старт, внимание, марш!");
 
+        // Выполняем перебор препятствий, выводим информацию о каждом препятствии на консоль
         for (int i = 0; i < obstacles.length; i++) {
             System.out.println("Препятствие " + (i + 1) + ": " + obstacles[i]);
 
-            for (Competitor competitor : competitors){
-                obstacles[i].interact(competitor);
+            // Внутренним циклом выполняем перебор участников
+            for (int j = 0; j < competitors.length; j++){
+
+                // Если участник не равен null, вызываем метод взаимодействия препятствия с этим участником.
+                // Если преодолеть препятствие не удалось, и участник сошёл с дистанции,
+                // присваиваем соответствующему элементу массива значение null.
+                if (competitors[j] != null){
+                    if (!obstacles[i].interact(competitors[j])){
+                        competitors[j] = null;
+                    }
+                }
             }
             System.out.println();
         }

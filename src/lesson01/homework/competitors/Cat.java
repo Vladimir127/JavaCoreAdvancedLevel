@@ -1,15 +1,18 @@
-package lesson01.homework;
+package lesson01.homework.competitors;
 
 import java.util.Random;
 
 /** Кот */
 public class Cat implements Competitor {
     /** Ограничение на бег */
-    private int maxRun;
+    private final int maxRun;
 
     /** Ограничение на прыжки */
-    private int maxJump;
+    private final int maxJump;
 
+    /**
+     * Инициализирует экземпляр класса
+     */
     public Cat() {
         Random random = new Random();
         maxRun = random.nextInt(500);
@@ -19,10 +22,10 @@ public class Cat implements Competitor {
     @Override
     public boolean jump(int height) {
         if (height <= maxJump){
-            System.out.println("Кот прыгнул на высоту " + height + " см");
+            System.out.println("Кот прыгнул на высоту " + height + " см.");
             return true;
         } else {
-            System.out.println("Кот НЕ прыгнул на высоту " + height + " см. Кот сошёл с дистанции.");
+            System.out.println("Кот прыгнул на высоту " + maxJump + " см. Кот сошёл с дистанции.");
             return false;
         }
     }
@@ -30,10 +33,10 @@ public class Cat implements Competitor {
     @Override
     public boolean run(int distance) {
         if (distance <= maxRun){
-            System.out.println("Кот пробежал " + distance + " м");
+            System.out.println("Кот пробежал " + distance + " м.");
             return true;
         } else {
-            System.out.println("Кот НЕ пробежал " + distance + " м. Кот сошёл с дистанции.");
+            System.out.println("Кот пробежал " + maxRun + " м. Кот сошёл с дистанции.");
             return false;
         }
     }

@@ -1,6 +1,6 @@
-package lesson01.homework;
+package lesson01.homework.competitors;
 
-/** Интерфейс, определяющий общие поля для всех участников соревнования */
+/** Интерфейс, определяющий общие методы для всех участников соревнования */
 public interface Competitor {
     /**
      * Имитирует бег

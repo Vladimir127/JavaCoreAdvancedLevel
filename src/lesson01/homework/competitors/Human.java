@@ -1,4 +1,4 @@
-package lesson01.homework;
+package lesson01.homework.competitors;
 
 import java.util.Random;
 
@@ -6,11 +6,14 @@ import java.util.Random;
 public class Human implements Competitor {
 
     /** Ограничение на бег */
-    private int maxRun;
+    private final int maxRun;
 
     /** Ограничение на прыжки */
-    private int maxJump;
+    private final int maxJump;
 
+    /**
+     * Инициализирует экземпляр класса
+     */
     public Human() {
         Random random = new Random();
         maxRun = random.nextInt(500);
@@ -20,10 +23,10 @@ public class Human implements Competitor {
     @Override
     public boolean jump(int height) {
         if (height <= maxJump){
-            System.out.println("Человек прыгнул на высоту " + height + " см");
+            System.out.println("Человек прыгнул на высоту " + height + " см.");
             return true;
         } else {
-            System.out.println("Человек НЕ прыгнул на высоту " + height + " см. Человек сошёл с дистанции.");
+            System.out.println("Человек прыгнул на высоту " + maxJump + " см. Человек сошёл с дистанции.");
             return false;
         }
     }
@@ -31,10 +34,10 @@ public class Human implements Competitor {
     @Override
     public boolean run(int distance) {
         if (distance <= maxRun){
-            System.out.println("Человек пробежал " + distance + " м");
+            System.out.println("Человек пробежал " + distance + " м.");
             return true;
         } else {
-            System.out.println("Человек НЕ пробежал " + distance + " м. Человек сошёл с дистанции.");
+            System.out.println("Человек пробежал " + maxRun + " м. Человек сошёл с дистанции.");
             return false;
         }
     }

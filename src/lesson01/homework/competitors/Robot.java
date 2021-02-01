@@ -1,15 +1,18 @@
-package lesson01.homework;
+package lesson01.homework.competitors;
 
 import java.util.Random;
 
 /** Робот */
 public class Robot implements Competitor {
     /** Ограничение на бег */
-    private int maxRun;
+    private final int maxRun;
 
     /** Ограничение на прыжки */
-    private int maxJump;
+    private final int maxJump;
 
+    /**
+     * Инициализирует экземпляр класса
+     */
     public Robot(){
         Random random = new Random();
         maxRun = random.nextInt(500);
@@ -22,7 +25,7 @@ public class Robot implements Competitor {
             System.out.println("Робот прыгнул на высоту " + height + " см");
             return true;
         } else {
-            System.out.println("Робот НЕ прыгнул на высоту " + height + " см. Робот сошёл с дистанции.");
+            System.out.println("Робот прыгнул на высоту " + maxJump + " см. Робот сошёл с дистанции.");
             return false;
         }
     }
@@ -33,7 +36,7 @@ public class Robot implements Competitor {
             System.out.println("Робот пробежал " + distance + " м");
             return true;
         } else {
-            System.out.println("Робот НЕ пробежал " + distance + " м. Робот сошёл с дистанции.");
+            System.out.println("Робот пробежал " + maxRun + " м. Робот сошёл с дистанции.");
             return false;
         }
     }
