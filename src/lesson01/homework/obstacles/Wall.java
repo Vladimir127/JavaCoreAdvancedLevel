@@ -24,8 +24,9 @@ public class Wall extends Obstacle {
      * При встрече со стеной субъект должен её перепрыгнуть.
      * @param subject Субъект, реализующий интерфейс Competitor
      */
-    public void interact(Competitor subject){
-        subject.jump();
+    public boolean interact(Competitor subject){
+        subject.jump(height);
+        return true;
     }
 
     @Override

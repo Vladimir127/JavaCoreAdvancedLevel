@@ -26,12 +26,12 @@ public class RunningTrack extends Obstacle{
      * @param subject Субъект, реализующий интерфейс Competitor
      */
     @Override
-    public void interact(Competitor subject){
-        subject.run();
+    public boolean interact(Competitor subject){
+        return subject.run(length);
     }
 
     @Override
     public String toString() {
-        return "Беговая дорожка" + (length > 0 ? " длиной " + length + " см" : "");
+        return "Беговая дорожка" + (length > 0 ? " длиной " + length + " м" : "");
     }
 }
