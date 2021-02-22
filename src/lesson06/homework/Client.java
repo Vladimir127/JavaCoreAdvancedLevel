@@ -1,3 +1,5 @@
+package lesson06.homework;
+
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -10,12 +12,16 @@ public class Client {
     }
 
     private static void startTextClient() {
+
+        // Создаём сокет для подключения к серверу, указываем адрес и порт
         try (Socket socket  = new Socket("localhost", 8180);
+
+             // Потоки для переписки клиента с сервером
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
              PrintWriter out = new PrintWriter(socket.getOutputStream());
              Scanner sc = new Scanner(System.in)){
-            String myMessage = "";
-           // String serverMessage = "";
+
+            // Создаём и запускаем отдельный поток, который будет принимать сообщения от сервера и выводить их в консоль
             Thread serverReader = new Thread(() -> {
                 String serverMessage = "";
                 try {
@@ -28,6 +34,9 @@ public class Client {
                 }
             });
             serverReader.start();
+
+            // Отправляем сообщения серверу до тех пор, пока введённое сообщение не будет словом "stop"
+            String myMessage = "";
             do{
                 //serverMessage = in.readLine();
                 //System.out.println(serverMessage);
@@ -36,18 +45,6 @@ public class Client {
                 out.flush();
             }while(!myMessage.equalsIgnoreCase("stop"));
 
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void startObjectClient() {
-        try (Socket socket  = new Socket("localhost", 8180);
-             ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream())){
-            Cat vasilyi = new Cat(3,"Vasilyi");
-            out.writeObject(vasilyi);
         } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (IOException e) {

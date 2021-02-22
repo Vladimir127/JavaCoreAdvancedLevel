@@ -1,44 +1,60 @@
+package lesson06.homework;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Server {
     public static void main(String ... args) {
-        //startTextServer();
-        startObjectServer();
+        startTextServer();
+        //startObjectServer();
     }
 
     private static void startTextServer() {
+
+        // Создаём серверный сокет, определяем ему порт
         try(ServerSocket serverSocket = new ServerSocket(8180)){
             System.out.println("Server is listening");
+
+            // Соединение с клиентом начинается после вызова метода accept(), который возвращает клиентский сокет
             try(Socket socket = serverSocket.accept();
+
+                // Потоки для переписки клиента с сервером
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                PrintWriter out = new PrintWriter(socket.getOutputStream())
-            ){
+                PrintWriter out = new PrintWriter(socket.getOutputStream());
+                Scanner sc = new Scanner(System.in)){
+
+                // Выводим сообщение, что клиент подключился, а клиенту отправляем приветственное сообщение
                 System.out.println("Client is connected");
                 out.println("Hello client");
                 out.flush();
-                String message = "";
+
+                // Создаём и запускаем отдельный поток, который будет принимать сообщения от клиента и выводить их в консоль
+                Thread clientReader = new Thread(() -> {
+                    String clientMessage = "";
+                    try {
+                        while(!socket.isClosed()) {
+                            clientMessage = in.readLine();
+                            System.out.println(clientMessage);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+                clientReader.start();
+
+                // Отправляем сообщения серверу до тех пор, пока введённое сообщение не будет словом "stop"
+                String myMessage = "";
                 do{
-                    message = in.readLine();
-                    out.println("Recieved : "+message);
+                    //serverMessage = in.readLine();
+                    //System.out.println(serverMessage);
+                    myMessage = sc.nextLine();
+                    out.println(myMessage);
                     out.flush();
-                    //out.println("Recieved2 : "+message);
-                    //out.flush();
-                }while(!message.equalsIgnoreCase("stop"));
+                }while(!myMessage.equalsIgnoreCase("stop"));
             }
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void startObjectServer() {
-        try(ServerSocket serverSocket = new ServerSocket(8180);
-            Socket socket = serverSocket.accept();
-            ObjectInputStream in = new ObjectInputStream(socket.getInputStream())){
-            Cat recievedCat = (Cat)in.readObject();
-            System.out.println(recievedCat);
-        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
