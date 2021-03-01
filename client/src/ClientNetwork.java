@@ -32,7 +32,7 @@ public class ClientNetwork {
                             // rassilka imeyushihsya klientov
                         }
                         else {
-                            // vivod soobsheniya
+                            sendMessage(msg);
                         }
                     }
                 } catch (IOException e) {

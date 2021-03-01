@@ -21,35 +21,32 @@ public class ClientHandler {
             this.socket = socket;
             this.in = new DataInputStream(socket.getInputStream());
             this.out = new DataOutputStream(socket.getOutputStream());
-            this.nickname = "Client "+numero;
+            this.nickname = "Client " + numero;
             new Thread(() -> {
                 server.subscribe(this);
 
                 // Начинаем читать сообщения
                 boolean continueChat = true;
-                while (continueChat) {
-                    String msg = null;
-                    try {
+                try {
+                    while (continueChat) {
+                        String msg = null;
+
                         msg = in.readUTF();
 
                         // Если сообщение начинается со слеша, то это команда. В этом блоке будет обработка команд
-                        if(msg.startsWith("/")) {
-                            if(msg.equalsIgnoreCase("/end")) {
+                        if (msg.startsWith("/")) {
+                            if (msg.equalsIgnoreCase("/end")) {
                                 continueChat = false;
                             }
-                        }
-                        else {
+                        } else {
                             // Рассылаем сообщение всем клиентам, вызывая метод broadcastMessage на сервере
-                            server.broadcastMessage(nickname+" : "+msg);
+                            server.broadcastMessage(nickname + " : " + msg);
                         }
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
                     }
-                    finally {
-                        disconnect();
-                    }
-
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    disconnect();
                 }
             }).start();
         } catch (IOException e) {
